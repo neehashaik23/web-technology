@@ -1,0 +1,150 @@
+/* Import Beautiful Font */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body{
+font-family:'Poppins', sans-serif;
+margin:0;
+padding:0;
+background:linear-gradient(120deg,#ffe6f7,#f3e8ff,#e6f0ff);
+color:#444;
+}
+
+/* Header */
+
+header{
+background:linear-gradient(135deg,#ff7eb3,#b784ff);
+color:white;
+text-align:center;
+padding:40px 20px;
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+header h1{
+margin:0;
+font-size:40px;
+}
+
+header p{
+font-size:18px;
+margin-top:10px;
+}
+
+/* Navigation */
+
+nav{
+background:white;
+padding:18px;
+text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+}
+
+nav a{
+color:#ff5fa2;
+margin:15px;
+text-decoration:none;
+font-weight:600;
+padding:8px 18px;
+border-radius:20px;
+transition:0.3s;
+}
+
+nav a:hover{
+background:linear-gradient(120deg,#ff7eb3,#b784ff);
+color:white;
+}
+
+/* Section Styling */
+
+section{
+background:white;
+margin:30px auto;
+padding:30px;
+border-radius:20px;
+width:85%;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+section:hover{
+transform:translateY(-8px);
+}
+
+/* Headings */
+
+h2{
+color:#ff5fa2;
+border-bottom:3px solid #ffe0f5;
+padding-bottom:10px;
+}
+
+/* Profile Image */
+
+.profile-img{
+width:170px;
+border-radius:50%;
+display:block;
+margin:20px auto;
+border:5px solid #ffd6f0;
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Skills */
+
+ul{
+list-style:none;
+padding:0;
+}
+
+ul li{
+background:linear-gradient(120deg,#fff0f8,#f3e8ff);
+padding:12px;
+margin:10px 0;
+border-radius:12px;
+border-left:5px solid #ff7eb3;
+transition:0.3s;
+}
+
+ul li:hover{
+transform:translateX(8px);
+}
+
+/* Contact */
+
+#contact p{
+background:#fff5fb;
+padding:12px;
+border-radius:10px;
+border-left:4px solid #b784ff;
+}
+
+/* Footer */
+
+footer{
+background:linear-gradient(135deg,#ff7eb3,#b784ff);
+color:white;
+text-align:center;
+padding:25px;
+margin-top:40px;
+}
+
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+header h1{
+font-size:28px;
+}
+
+section{
+width:92%;
+}
+
+nav a{
+display:inline-block;
+margin:8px;
+}
+
+}

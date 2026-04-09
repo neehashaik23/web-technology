@@ -1,0 +1,94 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Calculator</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+input {
+    padding: 8px;
+    margin-right: 10px;
+    width: 220px;
+}
+
+button {
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>SIMPLE CALCULATOR</h1>
+
+<input type="number" id="num1" placeholder="Enter first number">
+<input type="number" id="num2" placeholder="Enter second number">
+
+<br><br>
+
+<button onclick="add()"> + </button>
+<button onclick="subtract()"> - </button>
+<button onclick="multiply()"> * </button>
+<button onclick="divide()"> / </button>
+
+<h2>Result: <span id="result"></span></h2>
+
+<br>
+
+<button onclick="goToPage()">Go to Calculator Page</button>
+
+<script>
+
+function getValues() {
+    let num1 = parseFloat(document.getElementById("num1").value);
+    let num2 = parseFloat(document.getElementById("num2").value);
+    return [num1, num2];
+}
+
+function add() {
+    let [num1, num2] = getValues();
+    document.getElementById("result").innerHTML = num1 + num2;
+}
+
+function subtract() {
+    let [num1, num2] = getValues();
+    document.getElementById("result").innerHTML = num1 - num2;
+}
+
+function multiply() {
+    let [num1, num2] = getValues();
+    document.getElementById("result").innerHTML = num1 * num2;
+}
+
+function divide() {
+    let [num1, num2] = getValues();
+    document.getElementById("result").innerHTML = num1 / num2;
+}
+
+function goToPage() {
+    window.location.href = "calculator.html";
+}
+
+</script>
+
+</body>
+</html>
+```

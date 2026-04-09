@@ -1,0 +1,277 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Form</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#5f72bd,#9b23ea);
+}
+
+.container{
+background:white;
+padding:30px;
+width:350px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+color:#333;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#4a6cf7;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#3655d4;
+}
+
+.view-btn{
+background:#28a745;
+margin-top:10px;
+}
+
+.view-btn:hover{
+background:#1e7e34;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Student Form</h2>
+
+<form id="form">
+
+<input type="text" id="name" placeholder="Student Name" required>
+
+<input type="email" id="email" placeholder="Email Address" required>
+
+<select id="department" required>
+<option value="">Select Department</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<label>Gender</label>
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+
+<label>Skills</label>
+<input type="checkbox" class="skills" value="HTML"> HTML
+<input type="checkbox" class="skills" value="CSS"> CSS
+<input type="checkbox" class="skills" value="JavaScript"> JavaScript
+<input type="checkbox" class="skills" value="Python"> Python
+
+<button type="submit">Submit</button>
+
+</form>
+
+<button class="view-btn" onclick="openData()">View Student Data</button>
+
+</div>
+
+<script>
+
+document.getElementById("form").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let email=document.getElementById("email").value;
+let department=document.getElementById("department").value;
+
+let gender=document.querySelector('input[name="gender"]:checked');
+
+let skills=[];
+document.querySelectorAll(".skills:checked").forEach(el=>{
+skills.push(el.value);
+});
+
+let student={
+name:name,
+email:email,
+department:department,
+gender:gender?gender.value:"",
+skills:skills.join(", ")
+};
+
+let data=JSON.parse(localStorage.getItem("students"))||[];
+
+data.push(student);
+
+localStorage.setItem("students",JSON.stringify(data));
+
+alert("Student Registered Successfully");
+
+document.getElementById("form").reset();
+
+});
+
+function openData(){
+
+let data=JSON.parse(localStorage.getItem("students"))||[];
+
+let rows="";
+
+data.forEach(s=>{
+rows+=`
+<tr>
+<td>${s.name}</td>
+<td>${s.email}</td>
+<td>${s.department}</td>
+<td>${s.gender}</td>
+<td>${s.skills}</td>
+</tr>
+`;
+});
+
+let newWindow=window.open("");
+
+newWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Student Data</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:20px;
+}
+
+table{
+border-collapse:collapse;
+width:100%;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:10px;
+}
+
+button{
+padding:10px;
+margin:10px 5px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Student Data</h2>
+
+<button onclick="copyData()">Copy Data</button>
+<button onclick="downloadCSV()">Download CSV</button>
+
+<table id="table">
+
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Department</th>
+<th>Gender</th>
+<th>Skills</th>
+</tr>
+
+${rows}
+
+</table>
+
+<script>
+
+function copyData(){
+let text=document.getElementById("table").innerText;
+navigator.clipboard.writeText(text);
+alert("Copied Successfully");
+}
+
+function downloadCSV(){
+
+let rows=document.querySelectorAll("table tr");
+let csv=[];
+
+rows.forEach(row=>{
+let cols=row.querySelectorAll("td,th");
+let rowData=[];
+
+cols.forEach(col=>{
+rowData.push(col.innerText);
+});
+
+csv.push(rowData.join(","));
+});
+
+let blob=new Blob([csv.join("\\n")],{type:"text/csv"});
+
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="student_data.csv";
+a.click();
+
+}
+
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+}
+
+</script>
+
+</body>
+
+</html>
+```
+

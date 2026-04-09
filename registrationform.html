@@ -1,0 +1,157 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+
+<style>
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#f4f4f4;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.form-container{
+background:white;
+padding:25px;
+border-radius:8px;
+width:350px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:8px;
+margin:8px 0;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#007BFF;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+.error{
+color:red;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="form-container">
+
+<h2>Registration Form</h2>
+
+<form onsubmit="return validateForm()">
+
+<label>Name</label>
+<input type="text" id="name">
+
+<label>Email</label>
+<input type="text" id="email">
+
+<label>Password</label>
+<input type="password" id="password">
+
+<label>Confirm Password</label>
+<input type="password" id="confirmPassword">
+
+<label>Gender</label><br>
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+<br><br>
+
+<label>Skills</label><br>
+<input type="checkbox" name="skills" value="HTML"> HTML
+<input type="checkbox" name="skills" value="CSS"> CSS
+<input type="checkbox" name="skills" value="JavaScript"> JavaScript
+<br><br>
+
+<div class="error" id="error"></div>
+
+<button type="submit">Register</button>
+
+</form>
+
+</div>
+
+<script>
+
+function validateForm(){
+
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+let password = document.getElementById("password").value;
+let confirmPassword = document.getElementById("confirmPassword").value;
+let gender = document.querySelector('input[name="gender"]:checked');
+let skills = document.querySelectorAll('input[name="skills"]:checked');
+
+let error = document.getElementById("error");
+
+if(name==""){
+error.innerHTML="Name is required";
+return false;
+}
+
+if(email==""){
+error.innerHTML="Email is required";
+return false;
+}
+
+if(password==""){
+error.innerHTML="Password is required";
+return false;
+}
+
+if(password.length < 6){
+error.innerHTML="Password must be at least 6 characters";
+return false;
+}
+
+if(password !== confirmPassword){
+error.innerHTML="Passwords do not match";
+return false;
+}
+
+if(!gender){
+error.innerHTML="Select gender";
+return false;
+}
+
+if(skills.length==0){
+error.innerHTML="Select at least one skill";
+return false;
+}
+
+alert("Registration Successful");
+
+return true;
+
+}
+
+</script>
+
+</body>
+</html>
+```

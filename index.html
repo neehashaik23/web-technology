@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Project Experiments Dashboard</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg-dark: #0a0a0f;
+			--bg-card: rgba(255, 255, 255, 0.03);
+			--card-border: rgba(255, 255, 255, 0.08);
+			--card-hover-border: rgba(100, 181, 246, 0.5);
+			--text-main: #f8f9fa;
+			--text-muted: #a0aab2;
+			--accent: #3b82f6;
+			--accent-hover: #2563eb;
+			--gradient-1: #6366f1;
+			--gradient-2: #ec4899;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: 'Outfit', sans-serif;
+			background-color: var(--bg-dark);
+			color: var(--text-main);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 40px 24px;
+			position: relative;
+			overflow-x: hidden;
+		}
+
+		/* Dynamic Animated Background */
+		body::before, body::after {
+			content: '';
+			position: absolute;
+			width: 600px;
+			height: 600px;
+			border-radius: 50%;
+			filter: blur(120px);
+			z-index: -1;
+			animation: float 15s infinite alternate ease-in-out;
+		}
+
+		body::before {
+			background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(0,0,0,0) 70%);
+			top: -200px;
+			left: -200px;
+		}
+
+		body::after {
+			background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, rgba(0,0,0,0) 70%);
+			bottom: -100px;
+			right: -200px;
+			animation-delay: -5s;
+		}
+
+		@keyframes float {
+			0% { transform: translate(0, 0) scale(1); }
+			100% { transform: translate(50px, 50px) scale(1.1); }
+		}
+
+		.container {
+			max-width: 1100px;
+			width: 100%;
+			z-index: 1;
+		}
+
+		header {
+			text-align: center;
+			margin-bottom: 60px;
+			animation: fadeInDown 0.8s ease-out;
+		}
+
+		h1 {
+			font-size: 3.5rem;
+			font-weight: 700;
+			margin-bottom: 16px;
+			background: linear-gradient(to right, var(--gradient-1), var(--gradient-2));
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			letter-spacing: -1px;
+		}
+
+		.lead {
+			font-size: 1.25rem;
+			color: var(--text-muted);
+			font-weight: 300;
+		}
+
+		section {
+			margin-bottom: 50px;
+			animation: fadeInUp 0.8s ease-out backwards;
+		}
+
+		section:nth-of-type(2) {
+			animation-delay: 0.2s;
+		}
+
+		h2 {
+			font-size: 1.8rem;
+			font-weight: 600;
+			margin-bottom: 24px;
+			display: inline-block;
+			position: relative;
+			padding-bottom: 8px;
+		}
+
+		h2::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 40px;
+			height: 3px;
+			background: var(--gradient-1);
+			border-radius: 2px;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+			gap: 20px;
+		}
+
+		/* Glassmorphism Cards */
+		.card {
+			background: var(--bg-card);
+			border: 1px solid var(--card-border);
+			border-radius: 16px;
+			padding: 24px;
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.card::before {
+			content: '';
+			position: absolute;
+			top: 0; left: 0; width: 100%; height: 100%;
+			background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+			pointer-events: none;
+		}
+
+		.card:hover {
+			transform: translateY(-5px);
+			border-color: var(--card-hover-border);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.2);
+		}
+
+		.card h3 {
+			font-size: 1.25rem;
+			margin-bottom: 12px;
+			font-weight: 600;
+			color: #fff;
+			display: flex;
+			align-items: center;
+		}
+
+		.card .muted {
+			color: var(--text-muted);
+			font-size: 0.95rem;
+			margin-bottom: 20px;
+			flex-grow: 1;
+			line-height: 1.5;
+		}
+
+		.card .actions {
+			margin-top: auto;
+			display: flex;
+			gap: 12px;
+		}
+
+		/* Modern Buttons */
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 10px 20px;
+			border-radius: 8px;
+			font-size: 0.95rem;
+			font-weight: 600;
+			text-decoration: none;
+			transition: all 0.2s ease;
+			cursor: pointer;
+			border: 1px solid transparent;
+		}
+
+		.btn-primary {
+			background: var(--accent);
+			color: #fff;
+			box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+		}
+
+		.btn-primary:hover {
+			background: var(--accent-hover);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+		}
+
+		.btn-secondary {
+			background: rgba(255, 255, 255, 0.05);
+			color: #fff;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.btn-secondary:hover {
+			background: rgba(255, 255, 255, 0.1);
+			transform: translateY(-2px);
+		}
+
+		.badge {
+			display: inline-block;
+			padding: 4px 8px;
+			border-radius: 4px;
+			background: rgba(236, 72, 153, 0.15);
+			color: #f472b6;
+			font-size: 0.75rem;
+			font-weight: 600;
+			margin-left: 8px;
+			vertical-align: middle;
+		}
+
+		footer {
+			margin-top: 40px;
+			padding-top: 24px;
+			border-top: 1px solid var(--card-border);
+			color: var(--text-muted);
+			font-size: 0.95rem;
+			width: 100%;
+			text-align: center;
+			animation: fadeInUp 0.8s ease-out backwards;
+			animation-delay: 0.4s;
+		}
+
+		footer code {
+			background: rgba(255, 255, 255, 0.08);
+			padding: 4px 8px;
+			border-radius: 4px;
+			font-family: monospace;
+			color: #e2e8f0;
+			margin-left: 8px;
+		}
+
+		@keyframes fadeInUp {
+			from { opacity: 0; transform: translateY(20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@keyframes fadeInDown {
+			from { opacity: 0; transform: translateY(-20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			h1 { font-size: 2.5rem; }
+			.grid { grid-template-columns: 1fr; }
+			.card .actions { flex-direction: column; }
+			.btn { width: 100%; }
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Project Experiments</h1>
+			<p class="lead">A curated collection of web experiments and primary projects.</p>
+		</header>
+
+		<section aria-labelledby="experimentsHeading">
+			<h2 id="experimentsHeading">Laboratory</h2>
+			<div class="grid">
+				<div class="card">
+					<h3>Experiment 01</h3>
+					<p class="muted">Initial structural tests and basic layout patterns.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment01/experiment01.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 02</h3>
+					<p class="muted">Styling iterations and interface component designs.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment02/home.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 03</h3>
+					<p class="muted">Advanced CSS techniques and responsive grids.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment03/index.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 04</h3>
+					<p class="muted">JavaScript integration and basic interactivity.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment04/home.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 05 <span class="badge">Tool</span></h3>
+					<p class="muted">Functional calculator application using logic.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment05/calculator.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 06</h3>
+					<p class="muted">Complex DOM manipulation and state tracking.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment06/experiment6.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 07</h3>
+					<p class="muted">API integrations and asynchronous requests.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment07/experiment7.html" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 09 <span class="badge">PHP</span></h3>
+					<p class="muted">Server-side form processing and validation.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment09/form.php" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+				<div class="card">
+					<h3>Experiment 10 <span class="badge">PHP</span></h3>
+					<p class="muted">Server-side calculator with business logic.</p>
+					<div class="actions">
+						<a class="btn btn-primary" href="experiment10/calculator.php" target="_blank">Launch Lab</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section aria-labelledby="projectHeading">
+			<h2 id="projectHeading">Main Project</h2>
+			<div class="card" style="max-width: 600px;">
+				<h3>Project Web Technologies (project-wt)</h3>
+				<p class="muted">The culmination of these experiments. A full-fledged web application featuring responsive design, interactive components, and robust backend logic.</p>
+				<div class="actions">
+					<a class="btn btn-primary" href="https://projectmain.gt.tc/" target="_blank">
+						<svg style="width:18px;height:18px;margin-right:8px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+						Live Site
+					</a>
+					<a class="btn btn-secondary" href="https://github.com/neehashaik23/project-wt" target="_blank">
+						<svg style="width:18px;height:18px;margin-right:8px" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+						Source Code
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			<p>
+				Open PHP experiments with a local PHP server:
+				<code>php -S localhost:8000</code>
+			</p>
+		</footer>
+	</div>
+</body>
+</html>
